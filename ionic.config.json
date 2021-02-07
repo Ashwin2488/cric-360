@@ -1,0 +1,8 @@
+{
+  "name": "Cric360",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "6d31f65e"
+}
