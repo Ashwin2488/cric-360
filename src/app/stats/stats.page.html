@@ -1,0 +1,93 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Cricket 360
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Batting stats start-->
+  <div class="pt-1 pl-2 section-title ion-text-left">
+    <ion-text>
+      Batting
+    </ion-text>
+  </div>
+  <ion-slides pager="true" [options]="slideOpt">
+    <ion-slide>
+      <ion-card class="ion-activatable position-relative" (click)="onCardClick(0)">
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+        <app-stat-card-content
+          [title]="'Most Runs'"
+          [playerData]="mostRunsList"
+          [displayProperty]="'Runs'"
+          [defaultImage]="'assets/images/batsman.png'"
+        >
+        </app-stat-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+      <ion-card class="ion-activatable position-relative" (click)="onCardClick(1)">
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+        <app-stat-card-content
+          [title]="'High Score'"
+          [playerData]="highScoreList"
+          [displayProperty]="'HighScore'"
+          [defaultImage]="'assets/images/batsman.png'"
+        >
+        </app-stat-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+      <ion-card class="ion-activatable position-relative" (click)="onCardClick(2)">
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+        <app-stat-card-content
+          [title]="'Batting Average'"
+          [playerData]="battingAverageList"
+          [displayProperty]="'AvgRuns'"
+          [defaultImage]="'assets/images/batsman.png'"
+        >
+        </app-stat-card-content>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+  <!-- Batting stats end-->
+
+  <!-- Bowling stats start -->
+  <div class="section-title ion-text-left pl-2">
+    <ion-text>
+      Bowling
+    </ion-text>
+  </div>
+  <ion-slides pager="true" [options]="slideOpt">
+    <ion-slide>
+      <ion-card class="ion-activatable position-relative" (click)="onCardClick(3)">
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+        <app-stat-card-content
+          [title]="'Most Wickets'"
+          [playerData]="mostWicketsList"
+          [displayProperty]="'Wickets'"
+          [defaultImage]="'assets/images/bowler.png'"
+        >
+        </app-stat-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+      <ion-card class="ion-activatable position-relative" (click)="onCardClick(4)">
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+        <app-stat-card-content
+          [title]="'Best Economy'"
+          [playerData]="bestEconomyList"
+          [displayProperty]="'economy'"
+          [defaultImage]="'assets/images/bowler.png'"
+        >
+        </app-stat-card-content>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+  <!-- Bowling stats end -->
+
+</ion-content>
