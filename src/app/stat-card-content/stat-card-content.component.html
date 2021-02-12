@@ -1,0 +1,33 @@
+<div>
+  <ion-chip class="mt-1">
+    <ion-label>{{title}}</ion-label>
+  </ion-chip>
+  <div class="p-2">
+    <div class="d-flex star-player">
+      <ng-container *ngIf="playerData.length > 0">
+        <ion-avatar>
+          <img [src]="defaultImage">
+        </ion-avatar>
+        <ion-label class="ion-text-left pl-2">
+          <h1>{{playerData[0]['data']['AllmatchData'][displayProperty]}}</h1>
+          <h3 class="player-name-label">{{playerData[0]['data']['Name']}}</h3>
+        </ion-label>
+      </ng-container>
+    </div>
+    <div *ngIf="playerData.length > 1" class="player-list mt-1">
+      <ng-container *ngFor="let player of playerData;let i = index">
+        <div *ngIf="i > 0 && i < 3" class="d-flex">
+          <div class="avatar-container">
+            <ion-avatar>
+              <img [src]="defaultImage">
+            </ion-avatar>
+          </div>
+          <ion-label class="d-flex ion-align-items-center">
+            <h3 class="player-name-label ion-text-left">{{player['data']['Name']}}</h3>
+            <h5 class="ion-text-right">{{player['data']['AllmatchData'][displayProperty]}}</h5>
+          </ion-label>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

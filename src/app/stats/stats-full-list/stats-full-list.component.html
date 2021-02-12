@@ -1,0 +1,37 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Player Statistics
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="p-0">
+  <super-tabs [activeTabIndex]="activeTab">
+    <super-tabs-toolbar slot="top" scrollable>
+      <super-tab-button *ngFor="let tab of tabsList">
+        <ion-label>{{tab.label}}</ion-label>
+      </super-tab-button>
+    </super-tabs-toolbar>
+    <super-tabs-container>
+      <super-tab *ngFor="let tab of tabsList">
+        <ion-content>
+          <ion-list>
+            <ion-item class="ion-activatable position-relative" *ngFor="let player of dataHelperService[tab['playerListKey']]" (click)="presentModal(player)">
+              <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+              <ion-avatar>
+               <img src="assets/images/bowler.png">
+              </ion-avatar>
+             <ion-label class="d-flex ion-align-items-center">
+              <h2 class="pl-2 ion-text-left">{{player['data']['Name']}}</h2>
+             <h4 class="pr-1 ion-text-right">{{player['data']['AllmatchData'][tab['displayValueKey']]}}</h4>
+             </ion-label>
+           </ion-item>
+         </ion-list>
+        </ion-content>
+      </super-tab>
+    </super-tabs-container>
+  </super-tabs>
+  </ion-content>

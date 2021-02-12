@@ -1,0 +1,156 @@
+<ion-toolbar>
+  <ion-buttons slot="end">
+    <ion-button (click)="dismissModal()" color="primary" fill="clear">
+      Close
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+<ion-content>
+  <ion-card class="h-100">
+    <div class="player-profile ion-text-center">
+      <img class="h-100" src="assets/images/bowler.png">
+      <ion-card-header class="p-1">
+        <ion-card-title>{{playerData['data']['Name']}}</ion-card-title>
+        <ion-card-subtitle class="font-bold">{{playerData['data']['Role']}}</ion-card-subtitle>
+      </ion-card-header>
+    </div>
+    <ion-card-content class="p-0">
+      <super-tabs>
+        <super-tabs-toolbar slot="top">
+          <super-tab-button>
+            <ion-label>Batting</ion-label>
+          </super-tab-button>
+          <super-tab-button>
+            <ion-label>Bowling</ion-label>
+          </super-tab-button>
+        </super-tabs-toolbar>
+        <super-tabs-container>
+          <super-tab>
+            <ion-content>
+              <ion-grid class="p-1">
+                <ion-row>
+                  <ion-col>
+                    <h2>Matches / Innings</h2>
+                  </ion-col>
+                  <ion-col>
+                    <h2>{{playerData['data']['AllmatchData']['Matches'] || '-'}} / {{playerData['data']['AllmatchData']['NoofMatchesBatted'] || '-'}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <h2>Runs</h2>
+                  </ion-col>
+                  <ion-col>
+                    <h2>{{playerData['data']['AllmatchData']['Runs'] || '-'}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col [offset]="0">
+                    <h2>High Score</h2>
+                  </ion-col>
+                  <ion-col>
+                    <h2>{{playerData['data']['AllmatchData']['HighScore'] || '-'}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col [offset]="0">
+                    <h2>Batting Avg</h2>
+                  </ion-col>
+                  <ion-col>
+                    <h2>{{playerData['data']['AllmatchData']['AvgRuns'] || '-'}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col [offset]="0">
+                    <h2>Strike Rate</h2>
+                  </ion-col>
+                  <ion-col>
+                    <h2>{{playerData['data']['AllmatchData']['StrikeRate'] || '-'}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col [offset]="0">
+                    <h2>4s</h2>
+                  </ion-col>
+                  <ion-col>
+                    <h2>{{playerData['data']['AllmatchData']['Fours'] || '-'}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col [offset]="0">
+                    <h2>6s</h2>
+                  </ion-col>
+                  <ion-col>
+                    <h2>{{playerData['data']['AllmatchData']['Sixes'] || '-'}}</h2>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-content>
+          </super-tab>
+          <super-tab>
+            <ion-content>
+              <ion-grid class="p-1">
+                <ion-row>
+                  <ion-col>
+                    <h2>Matches / Innings</h2>
+                  </ion-col>
+                  <ion-col>
+                    <h2>{{playerData['data']['AllmatchData']['Matches'] || '-'}} / {{playerData['data']['AllmatchData']['NoofMatchesBowled'] || '-'}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <h2>Wickets</h2>
+                  </ion-col>
+                  <ion-col>
+                    <h2>{{playerData['data']['AllmatchData']['Wickets'] || '-'}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col [offset]="0">
+                    <h2>Bowling Economy</h2>
+                  </ion-col>
+                  <ion-col>
+                    <h2>{{playerData['data']['AllmatchData']['economy'] || '-'}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col [offset]="0">
+                    <h2>Overs Bowled</h2>
+                  </ion-col>
+                  <ion-col>
+                    <h2>{{playerData['data']['AllmatchData']['OversBowled'] || '-'}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col [offset]="0">
+                    <h2>Maidens</h2>
+                  </ion-col>
+                  <ion-col>
+                    <h2>{{playerData['data']['AllmatchData']['MaidenOvers'] || '-'}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col [offset]="0">
+                    <h2>Wides</h2>
+                  </ion-col>
+                  <ion-col>
+                    <h2>{{playerData['data']['AllmatchData']['Wides'] || '-'}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col [offset]="0">
+                    <h2>No Balls</h2>
+                  </ion-col>
+                  <ion-col>
+                    <h2>{{playerData['data']['AllmatchData']['NoBalls'] || '-'}}</h2>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-content>
+          </super-tab>
+        </super-tabs-container>
+      </super-tabs>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

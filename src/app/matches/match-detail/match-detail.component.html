@@ -1,0 +1,133 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Match Detail
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="p-0">
+  <div class="p-1">
+    <ion-card>
+    <div class="summary-container">
+      <ng-container *ngIf="matchSummary['batOrChase'] === '0'">
+        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Opponent',runs: matchSummary['opponentScore'].runs, overs: matchSummary['opponentScore']['overs'][0], teamImage: 'assets/images/club.PNG'}"></ng-container>
+        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Magnets',runs: matchSummary['teamScore'].runs, overs: matchSummary['teamScore']['overs'][0], teamImage: 'assets/images/team.jpg'}"></ng-container>
+      </ng-container>
+      <ng-container *ngIf="matchSummary['batOrChase'] === '1'">
+        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Magnets',runs: matchSummary['teamScore'].runs, overs: matchSummary['teamScore']['overs'][0], teamImage: 'assets/images/team.jpg'}"></ng-container>
+        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Opponent',runs: matchSummary['opponentScore'].runs, overs: matchSummary['opponentScore']['overs'][0], teamImage: 'assets/images/club.PNG'}"></ng-container>
+      </ng-container>
+      <ion-row>
+        <ion-col>
+          <span class="match-result">{{matchSummary['result']}}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="venue pb-1">
+        <ion-col class="d-flex ion-align-items-center">
+          <ion-icon name="location"></ion-icon>
+          <span class="pl-1">{{matchSummary['venue']}}</span>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-card>
+  </div>
+  <super-tabs class="scorecard-container">
+    <super-tabs-toolbar>
+      <super-tab-button>
+        <ion-label>Batting</ion-label>
+      </super-tab-button>
+      <super-tab-button>
+        <ion-label>Bowling</ion-label>
+      </super-tab-button>
+    </super-tabs-toolbar>
+    <super-tabs-container>
+      <super-tab>
+        <ion-content>
+          <ion-row class="scorecard-header font-bold p-2 pb-1 pt-1">
+            <ion-col [size]="5">Batsman</ion-col>
+            <ion-col>R</ion-col>
+            <ion-col>B</ion-col>
+            <ion-col>4s</ion-col>
+            <ion-col>6s</ion-col>
+            <ion-col>SR</ion-col>
+          </ion-row>
+          <ng-container *ngFor="let player of matchDetails">
+            <ion-row class="p-2 pb-0 pt-0" *ngIf="player['BattedOrder'] !== 0">
+              <ion-col [size]="5">
+                <div class="player-name">{{player['playerName']}}</div>
+                <div class="how-out">{{player['HowOut']}}</div>
+              </ion-col>
+              <ion-col>
+                {{player['Runs']}}
+              </ion-col>
+              <ion-col>
+                {{player['Balls']}}
+              </ion-col>
+              <ion-col>
+                {{player['Fours']}}
+              </ion-col>
+              <ion-col>
+                {{player['Sixes']}}
+              </ion-col>
+              <ion-col>
+                {{player['strikeRate']}}
+              </ion-col>
+            </ion-row>
+          </ng-container>
+        </ion-content>
+      </super-tab>
+      <super-tab>
+        <ion-content>
+          <ion-row class="scorecard-header font-bold p-2 pb-1 pt-1">
+            <ion-col [size]="5">Bowler</ion-col>
+            <ion-col>O</ion-col>
+            <ion-col>M</ion-col>
+            <ion-col>R</ion-col>
+            <ion-col>W</ion-col>
+            <ion-col>ER</ion-col>
+          </ion-row>
+          <ng-container *ngFor="let player of matchDetails">
+            <ion-row class="p-2 pb-0 pt-0" *ngIf="player['OversBowled'] !== '0'">
+              <ion-col [size]="5">
+                <div class="player-name">{{player['playerName']}}</div>
+              </ion-col>
+              <ion-col>
+                {{player['OversBowled']}}
+              </ion-col>
+              <ion-col>
+                {{player['RunsConceeded']}}
+              </ion-col>
+              <ion-col>
+                {{player['MaidenOvers']}}
+              </ion-col>
+              <ion-col>
+                {{player['Wickets']}}
+              </ion-col>
+              <ion-col>
+                {{player['economy']}}
+              </ion-col>
+            </ion-row>
+          </ng-container>
+        </ion-content>
+      </super-tab>
+    </super-tabs-container>
+  </super-tabs>
+</ion-content>
+
+<ng-template #scoreTemplate let-teamName="teamName" let-runs="runs" let-overs="overs" let-teamImage="teamImage">
+  <ion-row>
+    <ion-col class="d-flex ion-align-items-center">
+      <ion-avatar>
+        <img [src]="teamImage">
+      </ion-avatar>
+      <span class="pl-1 team-name">{{teamName}}</span>
+    </ion-col>
+    <ion-col class="d-flex ion-justify-content-center ion-align-items-center ion-text-right">
+      <span class="team-runs font-bold">{{runs}}</span><span>({{overs}})</span>
+    </ion-col>
+  </ion-row>
+</ng-template>
