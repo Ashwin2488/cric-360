@@ -1,0 +1,38 @@
+.scorecard-header {
+  background: var(--ion-card-background);
+}
+.how-out {
+  font-size: .8rem;
+}
+.scorecard-container ion-row {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  color: var(--ion-card-color);
+  &.scorecard-header {
+    border: 0;
+  }
+}
+.team-name {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.team-runs {
+  font-size: 1rem;
+}
+.venue {
+  font-size: .8rem;
+  ion-icon {
+    color: red;
+  }
+}
+.match-result {
+  color: #e69318;
+}
+.summary-container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+ion-card {
+  border-radius: 1.5rem;
+}
+

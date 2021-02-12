@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Cricket 360
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="p-2">
+    <ion-card class="ion-activatable position-relative m-1 mb-2 p-1" *ngFor="let matchData of allMatchesData" (click)="onCardClick(matchData)">
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+      <ng-container *ngIf="matchData['batOrChase'] === '0'">
+        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Opponent',runs: matchData['opponentScore'].runs, overs: matchData['opponentScore']['overs'][0], teamImage: 'assets/images/club.PNG'}"></ng-container>
+        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Magnets',runs: matchData['teamScore'].runs, overs: matchData['teamScore']['overs'][0], teamImage: 'assets/images/team.jpg'}"></ng-container>
+      </ng-container>
+      <ng-container *ngIf="matchData['batOrChase'] === '1'">
+        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Magnets',runs: matchData['teamScore'].runs, overs: matchData['teamScore']['overs'][0], teamImage: 'assets/images/team.jpg'}"></ng-container>
+        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Opponent',runs: matchData['opponentScore'].runs, overs: matchData['opponentScore']['overs'][0], teamImage: 'assets/images/club.PNG'}"></ng-container>
+      </ng-container>
+      <ion-row>
+        <ion-col>
+          <span class="match-result">{{matchData['result']}}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="venue">
+        <ion-col class="d-flex ion-align-items-center">
+          <ion-icon name="location"></ion-icon>
+          <span class="pl-1">{{matchData['venue']}}</span>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </div>
+</ion-content>
+
+<ng-template #scoreTemplate let-teamName="teamName" let-runs="runs" let-overs="overs" let-teamImage="teamImage">
+  <ion-row>
+    <ion-col class="d-flex ion-align-items-center">
+      <ion-avatar>
+        <img [src]="teamImage">
+      </ion-avatar>
+      <span class="pl-1 team-name">{{teamName}}</span>
+    </ion-col>
+    <ion-col class="d-flex ion-justify-content-center ion-align-items-center ion-text-right">
+      <span class="team-runs font-bold">{{runs}}</span><span>({{overs}})</span>
+    </ion-col>
+  </ion-row>
+</ng-template>

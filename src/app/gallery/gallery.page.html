@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Cricket 360
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-slides pager="true">
+    <ion-slide *ngFor="let image of imageList">
+      <ion-card>
+        <ion-img [src]="image"></ion-img>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

@@ -1,0 +1,31 @@
+:host {
+  display: block;
+}
+.player-list {
+  .avatar-container {
+    width: 17%;
+    ion-avatar {
+      height: 32px;
+      width: 32px;
+    }
+  }
+  ion-label {
+    width: 80%;
+    h3 {
+      width: 65%;
+    }
+    h5 {
+      width: 35%;
+    }
+  }
+}
+.star-player {
+  ion-avatar {
+    height: 46px;
+    width: 46px;
+  }
+  ion-label {
+    flex-grow: 1;
+  }
+}
+

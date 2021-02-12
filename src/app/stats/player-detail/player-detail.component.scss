@@ -1,0 +1,45 @@
+:host {
+  --card-header-bg: rgb(196 198 202 / 50%);
+}
+@media (prefers-color-scheme: dark) {
+  :host {
+    --card-header-bg: #8080806e;
+  }
+}
+.player-profile {
+  height: 50%;
+  position: relative;
+  ion-card-header {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: var(--card-header-bg);
+    ion-card-title, ion-card-subtitle {
+      text-align: left;
+    }
+    ion-card-title {
+      font-size: 1.8rem;
+    }
+  }
+}
+
+ion-card-content {
+  height: 50%;
+}
+.run-detail {
+  flex-grow: 1;
+  .stat-number {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  .stat-property {
+    font-size: 13px;
+    padding-left: 5px
+  }
+}
+h2 {
+  color: var(--ion-card-color);
+}
+
+
+
