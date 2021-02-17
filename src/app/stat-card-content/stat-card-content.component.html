@@ -9,14 +9,14 @@
           <img [src]="defaultImage">
         </ion-avatar>
         <ion-label class="ion-text-left pl-2">
-          <h1>{{playerData[0]['data']['AllmatchData'][displayProperty]}}</h1>
-          <h3 class="player-name-label">{{playerData[0]['data']['Name']}}</h3>
+          <h1 class="font-bold">{{playerData[0]['data']['AllmatchData'][displayProperty]}}</h1>
+          <h3 class="font-bold player-name-label">{{playerData[0]['data']['Name']}}</h3>
         </ion-label>
       </ng-container>
     </div>
     <div *ngIf="playerData.length > 1" class="player-list mt-1">
       <ng-container *ngFor="let player of playerData;let i = index">
-        <div *ngIf="i > 0 && i < 3" class="d-flex">
+        <div *ngIf="i > 0 && i < 4" class="padding-5px d-flex">
           <div class="avatar-container">
             <ion-avatar>
               <img [src]="defaultImage">

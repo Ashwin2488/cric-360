@@ -35,4 +35,15 @@
 ion-card {
   border-radius: 1.5rem;
 }
-
+.mom {
+  span {
+    color: var(--app-primary-color);
+    font-weight: bold;
+    font-size: 1rem;
+  }
+}
+.player-name {
+  color: var(--app-primary-color);
+  font-weight: bold;
+  font-size: 1rem;
+}

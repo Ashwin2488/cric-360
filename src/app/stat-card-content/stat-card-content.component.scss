@@ -1,6 +1,7 @@
 :host {
   display: block;
 }
+
 .player-list {
   .avatar-container {
     width: 17%;
@@ -27,5 +28,13 @@
   ion-label {
     flex-grow: 1;
   }
+}
+
+.star-player {
+  color: var(--app-primary-color);
+}
+
+.player-name-label {
+  font-size: 1rem;
 }
 

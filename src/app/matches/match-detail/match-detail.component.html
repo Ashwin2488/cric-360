@@ -10,8 +10,8 @@
 </ion-header>
 
 <ion-content class="p-0">
-  <div class="p-1">
-    <ion-card>
+  <div class="p-2">
+    <ion-card class="m-0">
     <div class="summary-container">
       <ng-container *ngIf="matchSummary['batOrChase'] === '0'">
         <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Opponent',runs: matchSummary['opponentScore'].runs, overs: matchSummary['opponentScore']['overs'][0], teamImage: 'assets/images/club.PNG'}"></ng-container>
@@ -24,6 +24,12 @@
       <ion-row>
         <ion-col>
           <span class="match-result">{{matchSummary['result']}}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mom">
+        <ion-col class="d-flex ion-align-items-center">
+          <ion-icon [src]="'assets/images/medal.svg'"></ion-icon>
+          <span class="pl-1">{{matchSummary['mom']}}</span>
         </ion-col>
       </ion-row>
       <ion-row class="venue pb-1">
@@ -56,7 +62,8 @@
             <ion-col>SR</ion-col>
           </ion-row>
           <ng-container *ngFor="let player of matchDetails">
-            <ion-row class="p-2 pb-0 pt-0" *ngIf="player['BattedOrder'] !== 0">
+            <ion-row (click)="presentModal(player['PlayerID'])" class="p-2 position-relative pb-0 pt-0" *ngIf="player['BattedOrder'] !== 0">
+              <ion-ripple-effect type="unbounded"></ion-ripple-effect>
               <ion-col [size]="5">
                 <div class="player-name">{{player['playerName']}}</div>
                 <div class="how-out">{{player['HowOut']}}</div>
