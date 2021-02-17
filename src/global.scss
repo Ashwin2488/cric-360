@@ -25,20 +25,29 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+.app-header-wrapper ion-avatar {
+  width: 40px;
+  height: 40px;
+  margin-left: 15px;
+}
 //Ionic super tabs global override
 :root {
+  --app-primary-color: #0c7da8;
   --super-tabs-toolbar-background: --ion-background-color;
-  --st-indicator-color: blue;
   --ion-card-color: #666;
   --st-label-color-active: #666;
   --st-label-color-inactive:#808080ad;
 }
 @media (prefers-color-scheme: dark) {
   :root {
+    --app-primary-color: #ff8d00;
     --st-label-color-active: #fff;
-    --st-indicator-color: #f3f621;
     --ion-card-color: #fff;
   }
+}
+:root {
+  --st-indicator-color:  var(--app-primary-color);
+  --ion-tab-bar-color-selected:  var(--app-primary-color);
 }
 $spacing-0: 0;
 $spacing-1: .75rem;
@@ -158,6 +167,13 @@ $spacing-2: 1rem;
     background: -webkit-linear-gradient(to right, #434343, #000000); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
+  }
+}
+@media (prefers-color-scheme: light) {
+  ion-content::part(background) {
+    background: #ECE9E6;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #FFFFFF, #ECE9E6);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
 }
 

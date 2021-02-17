@@ -1,24 +1,27 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>
-      Cricket 360
-    </ion-title>
+    <div class="d-flex app-header-wrapper">
+      <ion-avatar>
+        <ion-img src="assets/images/team.jpg"></ion-img>
+      </ion-avatar>
+      <ion-title>
+        Magnets CC
+      </ion-title>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="p-2 h-100">
   <!-- Batting stats start-->
-  <div class="pt-1 pl-2 section-title ion-text-left">
+  <div class="section-title ion-text-left">
     <ion-text>
       Batting
     </ion-text>
   </div>
   <ion-slides pager="true" [options]="slideOpt">
     <ion-slide>
-      <ion-card class="ion-activatable position-relative" (click)="onCardClick(0)">
+      <ion-card class="ml-0 mt-0 mb-0 mr-2 ion-activatable position-relative" (click)="onCardClick(0)">
         <ion-ripple-effect type="unbounded"></ion-ripple-effect>
         <app-stat-card-content
           [title]="'Most Runs'"
@@ -30,7 +33,7 @@
       </ion-card>
     </ion-slide>
     <ion-slide>
-      <ion-card class="ion-activatable position-relative" (click)="onCardClick(1)">
+      <ion-card class="ml-0 mt-0 mb-0 mr-2 ion-activatable position-relative" (click)="onCardClick(1)">
         <ion-ripple-effect type="unbounded"></ion-ripple-effect>
         <app-stat-card-content
           [title]="'High Score'"
@@ -42,7 +45,7 @@
       </ion-card>
     </ion-slide>
     <ion-slide>
-      <ion-card class="ion-activatable position-relative" (click)="onCardClick(2)">
+      <ion-card class="ml-0 mt-0 mb-0 mr-2 ion-activatable position-relative" (click)="onCardClick(2)">
         <ion-ripple-effect type="unbounded"></ion-ripple-effect>
         <app-stat-card-content
           [title]="'Batting Average'"
@@ -57,16 +60,16 @@
   <!-- Batting stats end-->
 
   <!-- Bowling stats start -->
-  <div class="section-title ion-text-left pl-2">
+  <div class="section-title ion-text-left">
     <ion-text>
       Bowling
     </ion-text>
   </div>
   <ion-slides pager="true" [options]="slideOpt">
     <ion-slide>
-      <ion-card class="ion-activatable position-relative" (click)="onCardClick(3)">
+      <ion-card class="ml-0 mt-0 mb-0 mr-2 ion-activatable position-relative" (click)="onCardClick(3)">
         <ion-ripple-effect type="unbounded"></ion-ripple-effect>
-        <app-stat-card-content
+        <app-stat-card-content id="card-summary"
           [title]="'Most Wickets'"
           [playerData]="mostWicketsList"
           [displayProperty]="'Wickets'"
@@ -76,7 +79,7 @@
       </ion-card>
     </ion-slide>
     <ion-slide>
-      <ion-card class="ion-activatable position-relative" (click)="onCardClick(4)">
+      <ion-card class="ml-0 mt-0 mb-0 mr-2 ion-activatable position-relative" (click)="onCardClick(4)">
         <ion-ripple-effect type="unbounded"></ion-ripple-effect>
         <app-stat-card-content
           [title]="'Best Economy'"
@@ -89,5 +92,5 @@
     </ion-slide>
   </ion-slides>
   <!-- Bowling stats end -->
-
+  </div>
 </ion-content>

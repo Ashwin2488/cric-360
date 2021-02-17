@@ -16,3 +16,10 @@ ion-card {
 .match-result {
   color: #e69318;
 }
+.mom {
+  span {
+    color: var(--app-primary-color);
+    font-weight: bold;
+    font-size: 1rem;
+  }
+}

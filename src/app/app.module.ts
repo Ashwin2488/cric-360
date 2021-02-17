@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import { SuperTabsModule } from '@ionic-super-tabs/angular';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,7 +16,8 @@ import { SuperTabsModule } from '@ionic-super-tabs/angular';
     IonicModule.forRoot(),
     SuperTabsModule.forRoot(),
     HttpClientModule,
-    AppRoutingModule],
+    AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
     ],

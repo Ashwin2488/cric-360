@@ -62,6 +62,7 @@ export class DataHelperService {
         venue: match.data.Venue,
         batOrChase: match.data.BatorChase,
         result: this.getMatchResult(match.data.Result, match.data.BatorChase, matchSummary),
+        mom: this.playerDetailMap[match.data.MOM].Name,
         teamScore: matchSummary.teamScore,
         opponentScore: matchSummary.opponentScore
       });

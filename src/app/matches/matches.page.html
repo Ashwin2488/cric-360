@@ -1,14 +1,19 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Cricket 360
-    </ion-title>
+    <div class="d-flex app-header-wrapper">
+      <ion-avatar>
+        <ion-img src="assets/images/team.jpg"></ion-img>
+      </ion-avatar>
+      <ion-title>
+        Magnets CC
+      </ion-title>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div class="p-2">
-    <ion-card class="ion-activatable position-relative m-1 mb-2 p-1" *ngFor="let matchData of allMatchesData" (click)="onCardClick(matchData)">
+    <ion-card class="ion-activatable position-relative ml-0 mt-0 mr-0 mb-2 p-1" *ngFor="let matchData of allMatchesData" (click)="onCardClick(matchData)">
       <ion-ripple-effect type="unbounded"></ion-ripple-effect>
       <ng-container *ngIf="matchData['batOrChase'] === '0'">
         <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Opponent',runs: matchData['opponentScore'].runs, overs: matchData['opponentScore']['overs'][0], teamImage: 'assets/images/club.PNG'}"></ng-container>
@@ -21,6 +26,12 @@
       <ion-row>
         <ion-col>
           <span class="match-result">{{matchData['result']}}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mom">
+        <ion-col class="d-flex ion-align-items-center">
+          <ion-icon [src]="'assets/images/medal.svg'"></ion-icon>
+          <span class="pl-1">{{matchData['mom']}}</span>
         </ion-col>
       </ion-row>
       <ion-row class="venue">
