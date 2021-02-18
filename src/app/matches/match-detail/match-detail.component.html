@@ -26,7 +26,7 @@
           <span class="match-result">{{matchSummary['result']}}</span>
         </ion-col>
       </ion-row>
-      <ion-row class="mom">
+      <ion-row *ngIf="matchSummary['mom']" class="mom">
         <ion-col class="d-flex ion-align-items-center">
           <ion-icon [src]="'assets/images/medal.svg'"></ion-icon>
           <span class="pl-1">{{matchSummary['mom']}}</span>
