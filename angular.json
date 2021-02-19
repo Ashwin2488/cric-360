@@ -33,8 +33,14 @@
               "src/firebase-messaging-sw.js",
               "src/manifest.webmanifest"
             ],
-            "styles": ["src/theme/variables.scss", "src/global.scss", "node_modules/intro.js/introjs.css"],
-            "scripts": ["node_modules/intro.js/intro.js"]
+            "styles": ["src/theme/variables.scss", "src/global.scss"],
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "core-js",
+              "raf",
+              "xlsx",
+              "@babel/runtime"
+            ]
           },
           "configurations": {
             "production": {

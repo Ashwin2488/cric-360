@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {DataHelperService} from '../../data-helper.service';
 import {ModalController} from '@ionic/angular';
 import {PlayerDetailComponent} from '../player-detail/player-detail.component';
+import {RacingChartComponent} from '../../charts/racing-chart/racing-chart.component';
 
 @Component({
   selector: 'app-stats-full-list',
@@ -56,6 +57,17 @@ export class StatsFullListComponent implements OnInit {
       cssClass: 'my-custom-class',
       componentProps: {
         playerData: player
+      }
+    });
+    return await modal.present();
+  }
+  async showCharts(tab) {
+    const chartData = this.dataHelperService.getChartData();
+    const modal = await this.modalController.create({
+      component: RacingChartComponent,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        chartData
       }
     });
     return await modal.present();

@@ -28,7 +28,8 @@
     "intro.js": "^3.3.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "@amcharts/amcharts4": "^4.10.15"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1100.5",
