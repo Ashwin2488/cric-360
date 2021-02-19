@@ -12,6 +12,7 @@ export class DataHelperService {
   highestWicketList = [];
   bestEconomyList = [];
   allMatchesData = [];
+  sortedMatchIdList = [];
   scoreCardDataMap = {
   };
   playerDetailMap = {
@@ -19,13 +20,13 @@ export class DataHelperService {
   constructor(private dataService: DataService) {
   }
   setAppData(response) {
-   this.appData = response;
-   const playerData = this.addBowlingEconomy(response.playerData.players);
-   this.addPlayerDetailMap(playerData);
-   this.addPlayerImage(playerData);
-   this.parsePlayerData(playerData);
-   this.parseMatchesData(response.matchData.matches);
-   this.parseScoreCardData(response.scorecardData.matches);
+    this.appData = response;
+    const playerData = this.addBowlingEconomy(response.playerData.players);
+    this.addPlayerDetailMap(playerData);
+    this.addPlayerImage(playerData);
+    this.parsePlayerData(playerData);
+    this.parseMatchesData(response.matchData.matches);
+    this.parseScoreCardData(response.scorecardData.matches);
   }
   addBowlingEconomy(players) {
     players.forEach((player) => {
@@ -55,6 +56,7 @@ export class DataHelperService {
     this.bestEconomyList = this.getBestEconomyList(players);
   }
   parseMatchesData(matches) {
+    matches = matches.sort(this.matchDateSort);
     matches.forEach((match) => {
       const matchSummary = this.parseMatchSummary(match.data.Summary);
       this.allMatchesData.push({
@@ -66,6 +68,7 @@ export class DataHelperService {
         teamScore: matchSummary.teamScore,
         opponentScore: matchSummary.opponentScore
       });
+      this.sortedMatchIdList.push(match.data.MatchID);
     });
   }
   parseScoreCardData(matches) {
@@ -105,7 +108,7 @@ export class DataHelperService {
     const teamWickets = matchSummary.teamScore.runs.split('-')[1];
     const opponentWickets = matchSummary.opponentScore.runs.split('-')[1];
     if (resultCode === '1') {
-      summary = 'Chennai bulls won by ';
+      summary = 'Magnets won by ';
       if (batOrChase === '1') {
         summary = `${summary}${teamScore - opponentScore} runs.`;
       } else {
@@ -134,6 +137,50 @@ export class DataHelperService {
     });
     return validEconomyPlayers.concat(otherPlayers);
   }
+  getChartData() {
+    const chartData = {};
+    const playerScoreMap = {};
+    const matchPlayerMap = {};
+    this.sortedMatchIdList.forEach((matchId, matchIndex) => {
+      if (this.scoreCardDataMap[matchId]) {
+        matchIndex = matchIndex + 1;
+        chartData[matchIndex] = [];
+        this.scoreCardDataMap[matchId].forEach((player) => {
+          playerScoreMap[player.playerName] = playerScoreMap[player.playerName] || {};
+          playerScoreMap[player.playerName].runs = playerScoreMap[player.playerName].runs ? playerScoreMap[player.playerName].runs : 0;
+          playerScoreMap[player.playerName].runs += Number(player.Runs);
+          matchPlayerMap[matchId] = matchPlayerMap[matchId] || {};
+          matchPlayerMap[matchId][player.playerName] = true;
+          const playerScoreObj = {
+            player: player.playerName,
+            runs: playerScoreMap[player.playerName].runs
+          };
+          chartData[matchIndex].push(playerScoreObj);
+        });
+        // push other player details if not present for current match
+        Object.keys(this.playerDetailMap).forEach((playerId) => {
+          const playerName = this.playerDetailMap[playerId].Name;
+          if (!matchPlayerMap[matchId][playerName]) {
+            playerScoreMap[playerName] = playerScoreMap[playerName] || {};
+            playerScoreMap[playerName].runs = playerScoreMap[playerName].runs ? playerScoreMap[playerName].runs : 0;
+            chartData[matchIndex].push({
+              player: playerName,
+              runs: playerScoreMap[playerName].runs
+            });
+          }
+        });
+      }
+    });
+    // sort the chart data by player name so that the charts are plotted correctly
+    this.sortChartData(chartData);
+    return chartData;
+  }
+  sortChartData(chartData) {
+    Object.keys(chartData).forEach((matchIndex) => {
+      chartData[matchIndex] = chartData[matchIndex].sort((a, b) => a.player.localeCompare(b.player));
+    });
+    return chartData;
+  }
   matchDataSort(property) {
     return (a, b) => {
       if (!a.data.AllmatchData) {
@@ -154,5 +201,13 @@ export class DataHelperService {
       }
       return b.data.AllmatchData[property] - a.data.AllmatchData[property];
     };
+  }
+
+  matchDateSort(a, b) {
+    const tempADate = a.data.Date.split('/');
+    const newADate = `${tempADate[1]}/${tempADate[0]}/${tempADate[2]}`;
+    const tempBDate = b.data.Date.split('/');
+    const newBDate = `${tempBDate[1]}/${tempBDate[0]}/${tempBDate[2]}`;
+    return new Date(newADate).getTime() - new Date(newBDate).getTime();
   }
 }
