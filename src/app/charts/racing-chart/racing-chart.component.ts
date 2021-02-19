@@ -77,7 +77,7 @@ export class RacingChartComponent implements OnInit, AfterViewInit, OnDestroy {
         categoryAxis.renderer.inversed = true;
         categoryAxis.renderer.grid.template.disabled = true;
         categoryAxis.renderer.labels.template.fill = am4core.color(this.fontColor);
-        categoryAxis.renderer.labels.template.fontSize = '16';
+        categoryAxis.renderer.labels.template.fontSize = '18';
 
         const valueAxis = this.chartObj.xAxes.push(new am4charts.ValueAxis());
         valueAxis.min = 0;
@@ -104,8 +104,8 @@ export class RacingChartComponent implements OnInit, AfterViewInit, OnDestroy {
         labelBullet.label.textAlign = 'end';
         labelBullet.label.dx = 15;
         labelBullet.label.fontSize = '16';
-        labelBullet.label.fill = am4core.color('#ffffff');
-        labelBullet.label.fontWeight = 'bold';
+        labelBullet.label.fill = am4core.color(this.fontColor);
+        // labelBullet.label.fontWeight = 'bold';
         labelBullet.label.truncate = false;
 
 
