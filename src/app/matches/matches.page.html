@@ -28,7 +28,7 @@
           <span class="match-result">{{matchData['result']}}</span>
         </ion-col>
       </ion-row>
-      <ion-row class="mom">
+      <ion-row *ngIf="matchData['mom']" class="mom">
         <ion-col class="d-flex ion-align-items-center">
           <ion-icon [src]="'assets/images/medal.svg'"></ion-icon>
           <span class="pl-1">{{matchData['mom']}}</span>

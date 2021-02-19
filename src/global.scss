@@ -160,7 +160,9 @@ $spacing-2: 1rem;
 .position-relative {
   position: relative;
 }
-
+.position-absolute {
+  position: absolute;
+}
 @media (prefers-color-scheme: dark) {
   ion-content::part(background) {
     background: #000000; /* fallback for old browsers */

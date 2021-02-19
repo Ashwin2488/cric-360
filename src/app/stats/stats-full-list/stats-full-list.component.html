@@ -18,6 +18,7 @@
     <super-tabs-container>
       <super-tab *ngFor="let tab of tabsList">
         <ion-content>
+          <ion-button *ngIf="tab['displayValueKey'] === 'Runs'" class="m-2" (click)="showCharts(tab)" color="primary" expand="block">Timelapse</ion-button>
           <div class="p-2">
             <ion-card class="ml-0 mt-0 mr-0 mb-2 ion-activatable position-relative" *ngFor="let player of dataHelperService[tab['playerListKey']];let i = index" (click)="presentModal(player)">
             <ion-card-content class="d-flex">
