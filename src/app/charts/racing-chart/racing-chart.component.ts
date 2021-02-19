@@ -14,6 +14,7 @@ export class RacingChartComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() chartData = null;
   fontColor = '#000000';
   chartObj = null;
+  intervalObj;
   private chart: am4charts.XYChart;
   constructor(@Inject(PLATFORM_ID) private platformId, private zone: NgZone,
               private modalController: ModalController) { }
@@ -119,12 +120,19 @@ export class RacingChartComponent implements OnInit, AfterViewInit, OnDestroy {
         let matchNo = 1;
         label.text = `Match ${matchNo}`;
 
-        let interval;
+        const stop = () => {
+          if (this.intervalObj) {
+            clearInterval(this.intervalObj);
+          }
+        };
         const nextMatch = () => {
           matchNo++;
 
           if (matchNo > Object.keys(allData).length) {
-            matchNo = 1;
+            matchNo = 0;
+            stop();
+            playButton.isActive = false;
+            return;
           }
 
           const newData = allData[matchNo];
@@ -150,16 +158,10 @@ export class RacingChartComponent implements OnInit, AfterViewInit, OnDestroy {
           categoryAxis.zoom({start: 0, end: itemsWithNonZero / categoryAxis.dataItems.length});
         };
         const play = () => {
-          interval = setInterval(() => {
+          this.intervalObj = setInterval(() => {
             nextMatch();
           }, stepDuration);
           nextMatch();
-        };
-
-        const stop = () => {
-          if (interval) {
-            clearInterval(interval);
-          }
         };
 
         categoryAxis.sortBySeries = series;
@@ -335,6 +337,10 @@ export class RacingChartComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     // Clean up chart when the component is removed
     this.browserOnly(() => {
+      this.chartData = null;
+      if (this.intervalObj) {
+        clearInterval(this.intervalObj);
+      }
       if (this.chartObj) {
         this.chartObj.dispose();
       }
