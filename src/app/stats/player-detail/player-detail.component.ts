@@ -10,7 +10,9 @@ export class PlayerDetailComponent implements OnInit {
   @Input() playerData;
   constructor(private modalController: ModalController) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('player', this.playerData);
+  }
   dismissModal() {
     this.modalController.dismiss();
   }

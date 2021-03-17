@@ -1,9 +1,9 @@
 :host {
-  --card-header-bg: rgb(196 198 202 / 50%);
+  --card-header-bg: #fff;
 }
 @media (prefers-color-scheme: dark) {
   :host {
-    --card-header-bg: #8080806e;
+    --card-header-bg: #383737c2;
   }
 }
 .player-profile {
@@ -13,7 +13,7 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    background: var(--card-header-bg);
+    background: #d2d5d6ab;
     ion-card-title, ion-card-subtitle {
       text-align: left;
     }
@@ -40,6 +40,19 @@ ion-card-content {
 h2 {
   color: var(--ion-card-color);
 }
-
+.batting-stats ion-card, .bowling-stats ion-card {
+  margin: 0;
+  padding: 1rem;
+  background: var(--card-header-bg);
+  text-align: center;
+  div {
+    font-size: 13px;
+    font-style: italic;
+  }
+  h2 {
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
 
 

@@ -12,6 +12,6 @@ export class StatCardContentComponent implements OnInit {
   @Input() defaultImage;
   constructor() { }
 
-  ngOnInit() {}
-
+  ngOnInit() {
+  }
 }

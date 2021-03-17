@@ -8,6 +8,7 @@
   padding-top: 5px !important;
   padding-bottom: 5px !important;
   color: var(--ion-card-color);
+  border-bottom: 1px solid #cecdcd;
   &.scorecard-header {
     border: 0;
   }
@@ -29,8 +30,12 @@
   color: #e69318;
 }
 .summary-container {
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 5px 15px;
+
+  ion-avatar {
+    height: 36px;
+    width: 36px;
+  }
 }
 ion-card {
   border-radius: 1.5rem;
@@ -46,4 +51,16 @@ ion-card {
   color: var(--app-primary-color);
   font-weight: bold;
   font-size: 1rem;
+}
+.match-type-date {
+  border-bottom: 1px solid #555555;
+  padding: 5px 10px;
+}
+::ng-deep app-match-summary-card ion-card {
+  margin-bottom: 0!important;
+}
+@media (prefers-color-scheme: light) {
+  .scorecard-container super-tab ion-content::part(background) {
+    background: #fff;
+  }
 }

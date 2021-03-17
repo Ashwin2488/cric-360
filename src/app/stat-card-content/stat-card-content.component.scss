@@ -3,11 +3,12 @@
 }
 
 .player-list {
+  margin-top: 5px;
   .avatar-container {
     width: 17%;
-    ion-avatar {
-      height: 32px;
-      width: 32px;
+    ion-avatar, ion-avatar img {
+      height: 24px;
+      width: 24px;
     }
   }
   ion-label {
@@ -21,9 +22,12 @@
   }
 }
 .star-player {
-  ion-avatar {
+  ion-avatar, ion-avatar img {
     height: 46px;
     width: 46px;
+  }
+  ion-avatar img {
+    border: 2px solid var(--app-primary-color);
   }
   ion-label {
     flex-grow: 1;
@@ -38,3 +42,6 @@
   font-size: 1rem;
 }
 
+.padding-5px {
+  padding-top: 5px;
+}

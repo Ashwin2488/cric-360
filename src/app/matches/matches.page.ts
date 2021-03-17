@@ -14,10 +14,6 @@ export class MatchesPage implements OnInit {
   allMatchesData = [];
   constructor(private dataHelperService: DataHelperService, private router: Router) {}
   ngOnInit() {
-    this.allMatchesData = this.dataHelperService.allMatchesData;
-  }
-  onCardClick(matchData) {
-    this.router.navigate([`/dashboard/matches/${matchData.matchId}`]);
-    return;
+    this.allMatchesData = this.dataHelperService.allMatchesData.slice(0).reverse();
   }
 }

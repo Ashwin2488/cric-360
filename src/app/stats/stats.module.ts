@@ -5,12 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { StatsPage } from './stats.page';
 import {StatCardContentComponentModule} from '../stat-card-content/stat-card-content.module';
 import { StatsPageRoutingModule } from './stats-routing.module';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
+    SharedModule,
     StatCardContentComponentModule,
     StatsPageRoutingModule
   ],
