@@ -1,25 +1,3 @@
-ion-card {
-  border-radius: 1.5rem;
-}
-.team-name {
-  font-size: 1rem;
-  font-weight: bold;
-}
-.team-runs {
-  font-size: 1rem;
-}
-.venue {
-  ion-icon {
-    color: red;
-  }
-}
-.match-result {
-  color: #e69318;
-}
-.mom {
-  span {
-    color: var(--app-primary-color);
-    font-weight: bold;
-    font-size: 1rem;
-  }
+::ng-deep .matches-list app-match-summary-card ion-card {
+  margin-bottom: 2rem!important;
 }

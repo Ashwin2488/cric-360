@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { StatsPage } from './stats.page';
 import {StatCardContentComponentModule} from '../stat-card-content/stat-card-content.module';
 import { StatsPageRoutingModule } from './stats-routing.module';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { StatsPageRoutingModule } from './stats-routing.module';
     CommonModule,
     FormsModule,
     StatCardContentComponentModule,
-    StatsPageRoutingModule
+    StatsPageRoutingModule,
+    SharedModule
   ],
   declarations: [StatsPage]
 })

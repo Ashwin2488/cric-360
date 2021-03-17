@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {DataService} from './data.service';
-
+import firebase from 'firebase/app';
+import 'firebase/storage';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,6 +11,8 @@ export class DataHelperService {
   highScoreList = [];
   battingAverageList = [];
   highestWicketList = [];
+  highestFoursList = [];
+  highestSixList = [];
   bestEconomyList = [];
   allMatchesData = [];
   sortedMatchIdList = [];
@@ -17,19 +20,23 @@ export class DataHelperService {
   };
   playerDetailMap = {
   };
+  allScoreCard = [];
+  strikeRateList = [];
   constructor(private dataService: DataService) {
   }
   setAppData(response) {
     this.appData = response;
-    const playerData = this.addBowlingEconomy(response.playerData.players);
+    this.allScoreCard = response.scorecardData.matches;
+    const playerData = this.addMissingData(response.playerData.players);
     this.addPlayerDetailMap(playerData);
-    this.addPlayerImage(playerData);
     this.parsePlayerData(playerData);
     this.parseMatchesData(response.matchData.matches);
     this.parseScoreCardData(response.scorecardData.matches);
   }
-  addBowlingEconomy(players) {
+  addMissingData(players) {
     players.forEach((player) => {
+      this.addPlayerImage(player);
+      this.addHighScore(player);
       if (player.data.AllmatchData && player.data.AllmatchData.OversBowled > 0 && player.data.AllmatchData.Matches > 1) {
         player.data.AllmatchData.economy = player.data.AllmatchData.RunsConceeded / player.data.AllmatchData.OversBowled;
         player.data.AllmatchData.economy = player.data.AllmatchData.economy.toFixed(2);
@@ -37,10 +44,24 @@ export class DataHelperService {
     });
     return players;
   }
-  addPlayerImage(players) {
-    const imageList = this.dataService.getMockPlayerIcons();
-    players.forEach((player) => {
-      player.icon = imageList[Math.floor(Math.random() * imageList.length)];
+  addHighScore(player) {
+    let highScore = 0;
+    this.allScoreCard.forEach((scoreCard) => {
+      if (scoreCard.data.PlayerID === player.data.PlayerID) {
+        highScore = Number(scoreCard.data.Runs) > highScore ? scoreCard.data.Runs : highScore;
+      }
+    });
+    player.data.AllmatchData = player.data.AllmatchData || {};
+    player.data.AllmatchData.HighScore = highScore;
+  }
+  addPlayerImage(player) {
+    const storage = firebase.storage();
+    const storageRef = storage.ref();
+
+    storageRef.child(`player-dp/${player.data.PlayerID}/player.jpg`).getDownloadURL().then((url) => {
+      player.data.icon = url;
+    }).catch(() => {
+      player.data.icon = 'assets/images/bowler.png';
     });
   }
   addPlayerDetailMap(players) {
@@ -54,11 +75,15 @@ export class DataHelperService {
     this.battingAverageList = players.slice(0).sort(this.matchDataSort('AvgRuns'));
     this.highestWicketList = players.slice(0).sort(this.matchDataSort('Wickets'));
     this.bestEconomyList = this.getBestEconomyList(players);
+    this.highestFoursList = players.slice(0).sort(this.matchDataSort('Fours'));
+    this.highestSixList = players.slice(0).sort(this.matchDataSort('Sixes'));
+    this.strikeRateList = players.slice(0).sort(this.matchDataSort('StrikeRate'));
   }
   parseMatchesData(matches) {
     matches = matches.sort(this.matchDateSort);
     matches.forEach((match) => {
-      const matchSummary = this.parseMatchSummary(match.data.Summary);
+      const isTournament = match.data.IsTournament === '1' ? true : false;
+      const matchSummary = this.parseMatchSummary(match.data.Summary, isTournament);
       this.allMatchesData.push({
         matchId: match.data.MatchID,
         venue: match.data.Venue,
@@ -66,7 +91,11 @@ export class DataHelperService {
         result: this.getMatchResult(match.data.Result, match.data.BatorChase, matchSummary),
         mom: this.playerDetailMap[match.data.MOM] ? this.playerDetailMap[match.data.MOM].Name : null,
         teamScore: matchSummary.teamScore,
-        opponentScore: matchSummary.opponentScore
+        opponentScore: matchSummary.opponentScore,
+        opponentName: matchSummary.opponentName,
+        matchType: matchSummary.matchType,
+        isTournament,
+        matchDate: this.getMatchDate(match.data.Date)
       });
       this.sortedMatchIdList.push(match.data.MatchID);
     });
@@ -80,11 +109,13 @@ export class DataHelperService {
       this.scoreCardDataMap[match.data.MatchID].push(match.data);
     });
   }
-  parseMatchSummary(summaryString) {
+  parseMatchSummary(summaryString, isTournament) {
     const tmpString = summaryString.split('&');
     let teamStr = tmpString[0].indexOf('We') !== -1 ? tmpString[0] : tmpString[1];
     teamStr = teamStr.replace('We', '').trim();
     let opponentStr = tmpString[0].indexOf('Opponent') !== -1 ? tmpString[0] : tmpString[1];
+    const opponentName = tmpString[2] ? tmpString[2].split('=')[1] : 'Opponent';
+    const matchType = isTournament ? tmpString[3] ? tmpString[3].split('=')[1] : 'Tournament' : 'Practice match';
     opponentStr = opponentStr.replace('Opponent', '').replace('-', '').trim();
     const teamScoreStr = teamStr.substr(0, teamStr.indexOf('('));
     const teamOversStr = teamStr.replace(teamScoreStr, '').slice(1, -1);
@@ -98,7 +129,9 @@ export class DataHelperService {
       opponentScore: {
         runs: opponentScoreStr.split('/').join('-'),
         overs: opponentOversStr.split('/')
-      }
+      },
+      opponentName,
+      matchType
     };
   }
   getMatchResult(resultCode, batOrChase , matchSummary) {
@@ -202,7 +235,17 @@ export class DataHelperService {
       return b.data.AllmatchData[property] - a.data.AllmatchData[property];
     };
   }
-
+  getMatchDate(date) {
+    let formattedDate = '';
+    try {
+      const tempDate = date.split('/');
+      const newDate = new Date(`${tempDate[1]}/${tempDate[0]}/${tempDate[2]}`);
+      formattedDate = newDate.toDateString();
+    } catch (e) {
+      formattedDate = '';
+    }
+    return formattedDate;
+  }
   matchDateSort(a, b) {
     const tempADate = a.data.Date.split('/');
     const newADate = `${tempADate[1]}/${tempADate[0]}/${tempADate[2]}`;

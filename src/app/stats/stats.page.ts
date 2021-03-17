@@ -16,6 +16,10 @@ export class StatsPage implements OnInit {
   battingAverageList = [];
   mostWicketsList = [];
   bestEconomyList = [];
+  recentMatches = [];
+  mostFoursList = [];
+  mostSixesList = [];
+  strikeRateList = [];
   constructor(private dataHelperService: DataHelperService, private router: Router) {}
   ngOnInit() {
     this.mostRunsList = this.dataHelperService.mostRunsList;
@@ -23,8 +27,16 @@ export class StatsPage implements OnInit {
     this.battingAverageList = this.dataHelperService.battingAverageList;
     this.mostWicketsList = this.dataHelperService.highestWicketList;
     this.bestEconomyList = this.dataHelperService.bestEconomyList;
+    this.mostFoursList = this.dataHelperService.highestFoursList;
+    this.mostSixesList = this.dataHelperService.highestSixList;
+    this.strikeRateList = this.dataHelperService.strikeRateList;
+
+    // this.recentMatches = this.dataHelperService.allMatchesData.slice(0).reverse().slice(0, 4);
   }
   onCardClick(context) {
     this.router.navigate([`/dashboard/stats/${context}`]);
+  }
+  gotoMatches() {
+    this.router.navigate([`/dashboard/matches`]);
   }
 }

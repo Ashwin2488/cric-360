@@ -7,7 +7,7 @@ import {BaseHttpService} from './base.service';
   providedIn: 'root'
 })
 export class DataService extends BaseHttpService {
-  private static API_DOMAIN = 'https://adukalam.herokuapp.com';
+  private static API_DOMAIN = 'https://magnetscc.herokuapp.com';
   // private static API_DOMAIN = null;
 
   contextPrefixMap = {

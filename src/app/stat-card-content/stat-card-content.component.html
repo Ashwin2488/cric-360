@@ -5,8 +5,9 @@
   <div class="p-2">
     <div class="d-flex star-player">
       <ng-container *ngIf="playerData.length > 0">
+        <!--        <div class="d-flex ion-align-items-center">1&nbsp;</div>-->
         <ion-avatar>
-          <img [src]="defaultImage">
+          <img [src]="playerData[0].data.icon">
         </ion-avatar>
         <ion-label class="ion-text-left pl-2">
           <h1 class="font-bold">{{playerData[0]['data']['AllmatchData'][displayProperty]}}</h1>
@@ -14,12 +15,13 @@
         </ion-label>
       </ng-container>
     </div>
-    <div *ngIf="playerData.length > 1" class="player-list mt-1">
+    <div *ngIf="playerData.length > 1" class="player-list">
       <ng-container *ngFor="let player of playerData;let i = index">
         <div *ngIf="i > 0 && i < 4" class="padding-5px d-flex">
+          <!--          <div class="d-flex ion-align-items-center">{{i+1}}&nbsp;</div>-->
           <div class="avatar-container">
             <ion-avatar>
-              <img [src]="defaultImage">
+              <img [src]="player.data.icon">
             </ion-avatar>
           </div>
           <ion-label class="d-flex ion-align-items-center">

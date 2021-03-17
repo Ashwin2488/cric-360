@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <app-back-button [routePath]="'/dashboard/matches'"></app-back-button>
     </ion-buttons>
     <ion-title>
       Match Detail
@@ -11,35 +11,7 @@
 
 <ion-content class="p-0">
   <div class="p-2">
-    <ion-card class="m-0">
-    <div class="summary-container">
-      <ng-container *ngIf="matchSummary['batOrChase'] === '0'">
-        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Opponent',runs: matchSummary['opponentScore'].runs, overs: matchSummary['opponentScore']['overs'][0], teamImage: 'assets/images/club.PNG'}"></ng-container>
-        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Magnets',runs: matchSummary['teamScore'].runs, overs: matchSummary['teamScore']['overs'][0], teamImage: 'assets/images/team.jpg'}"></ng-container>
-      </ng-container>
-      <ng-container *ngIf="matchSummary['batOrChase'] === '1'">
-        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Magnets',runs: matchSummary['teamScore'].runs, overs: matchSummary['teamScore']['overs'][0], teamImage: 'assets/images/team.jpg'}"></ng-container>
-        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Opponent',runs: matchSummary['opponentScore'].runs, overs: matchSummary['opponentScore']['overs'][0], teamImage: 'assets/images/club.PNG'}"></ng-container>
-      </ng-container>
-      <ion-row>
-        <ion-col>
-          <span class="match-result">{{matchSummary['result']}}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf="matchSummary['mom']" class="mom">
-        <ion-col class="d-flex ion-align-items-center">
-          <ion-icon [src]="'assets/images/medal.svg'"></ion-icon>
-          <span class="pl-1">{{matchSummary['mom']}}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="venue pb-1">
-        <ion-col class="d-flex ion-align-items-center">
-          <ion-icon name="location"></ion-icon>
-          <span class="pl-1">{{matchSummary['venue']}}</span>
-        </ion-col>
-      </ion-row>
-    </div>
-  </ion-card>
+    <app-match-summary-card [matchData]="matchSummary"></app-match-summary-card>
   </div>
   <super-tabs class="scorecard-container">
     <super-tabs-toolbar>
@@ -125,16 +97,3 @@
   </super-tabs>
 </ion-content>
 
-<ng-template #scoreTemplate let-teamName="teamName" let-runs="runs" let-overs="overs" let-teamImage="teamImage">
-  <ion-row>
-    <ion-col class="d-flex ion-align-items-center">
-      <ion-avatar>
-        <img [src]="teamImage">
-      </ion-avatar>
-      <span class="pl-1 team-name">{{teamName}}</span>
-    </ion-col>
-    <ion-col class="d-flex ion-justify-content-center ion-align-items-center ion-text-right">
-      <span class="team-runs font-bold">{{runs}}</span><span>({{overs}})</span>
-    </ion-col>
-  </ion-row>
-</ng-template>

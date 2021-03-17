@@ -1,7 +1,7 @@
 <ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <app-back-button [routePath]="'/dashboard/stats'"></app-back-button>
     </ion-buttons>
     <ion-title>
       Player Statistics
@@ -19,28 +19,30 @@
       <super-tab *ngFor="let tab of tabsList">
         <ion-content>
           <ion-button *ngIf="tab['displayValueKey'] === 'Runs'" class="m-2" (click)="showCharts(tab)" color="primary" expand="block">Timelapse</ion-button>
-          <div class="p-2">
-            <ion-card class="ml-0 mt-0 mr-0 mb-2 ion-activatable position-relative" *ngFor="let player of dataHelperService[tab['playerListKey']];let i = index" (click)="presentModal(player)">
-            <ion-card-content class="d-flex">
-              <ion-ripple-effect type="unbounded"></ion-ripple-effect>
-              <ion-row class="w-100 ion-align-items-center player-{{i+1}}">
-                <ion-col size="2">
-                  <ion-avatar>
-                   <img src="assets/images/bowler.png">
-                  </ion-avatar>
-                </ion-col>
-                <ion-col size="10">
-                  <ion-label class="d-flex">
-                    <h2 class="pl-2 ion-text-left">{{player['data']['Name']}}</h2>
-                    <h2 class="pr-1 ion-text-right">{{player['data']['AllmatchData'][tab['displayValueKey']]}}</h2>
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-            </ion-card-content>
-         </ion-card>
+          <div class="p-1" [class.pt-0]="tab['displayValueKey'] === 'Runs'">
+            <ion-card class="ml-0 mt-0 mr-0 mb-1 ion-activatable position-relative" *ngFor="let player of dataHelperService[tab['playerListKey']];let i = index" (click)="presentModal(player)">
+              <ion-card-content class="d-flex">
+                <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+                <ion-row class="w-100 ion-align-items-center player-{{i+1}}">
+                  <ion-col size="8">
+                    <div class="d-flex ion-align-items-center">
+                      <ion-avatar>
+                        <img [src]="player.data.icon">
+                      </ion-avatar>
+                      <h2 class="pl-1 ion-text-left">{{player['data']['Name']}}</h2>
+                    </div>
+                  </ion-col>
+                  <ion-col size="4">
+                    <ion-label>
+                      <h2 class="ion-text-right">{{player['data']['AllmatchData'][tab['displayValueKey']]}}</h2>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
           </div>
         </ion-content>
       </super-tab>
     </super-tabs-container>
   </super-tabs>
-  </ion-content>
+</ion-content>

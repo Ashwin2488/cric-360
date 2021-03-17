@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import {SuperTabsModule} from '@ionic-super-tabs/angular';
 import {MatchDetailComponent} from './match-detail.component';
 import {MatchDetailRoutingModule} from './match-detail-routing.module';
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import {MatchDetailRoutingModule} from './match-detail-routing.module';
     CommonModule,
     FormsModule,
     MatchDetailRoutingModule,
-    SuperTabsModule
+    SuperTabsModule,
+    SharedModule
   ],
   declarations: [MatchDetailComponent]
 })

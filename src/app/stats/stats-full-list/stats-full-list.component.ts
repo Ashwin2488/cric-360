@@ -40,6 +40,21 @@ export class StatsFullListComponent implements OnInit {
         displayValueKey: 'AvgRuns'
       },
       {
+        label: 'Most 6s',
+        playerListKey: 'highestSixList',
+        displayValueKey: 'Sixes'
+      },
+      {
+        label: 'Most 4s',
+        playerListKey: 'highestFoursList',
+        displayValueKey: 'Fours'
+      },
+      {
+        label: 'Strike Rate',
+        playerListKey: 'strikeRateList',
+        displayValueKey: 'StrikeRate'
+      },
+      {
         label: 'Most Wickets',
         playerListKey: 'highestWicketList',
         displayValueKey: 'Wickets'

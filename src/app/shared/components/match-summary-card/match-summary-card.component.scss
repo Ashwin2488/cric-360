@@ -1,0 +1,58 @@
+:host {
+  --card-bg: #fff;
+}
+@media (prefers-color-scheme: dark) {
+  :host {
+    --card-bg: #383737c2;
+  }
+}
+ion-card {
+  border-radius: 1.5rem;
+  background: var(--card-bg);
+  margin: 0 0 2rem;
+}
+.team-name {
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: left;
+  white-space: nowrap;
+}
+.team-runs {
+  font-size: 1rem;
+}
+.venue {
+  ion-icon {
+    color: red;
+  }
+  span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+.match-result {
+  color: #e69318;
+}
+.mom {
+  span {
+    color: var(--app-primary-color);
+    font-weight: bold;
+    font-size: 1rem;
+  }
+}
+.match-type-date {
+  padding: 5px 10px;
+  background: #10101040;
+}
+
+ion-avatar {
+  height: 36px;
+  width: 36px;
+}
+@media (prefers-color-scheme: light) {
+  .match-type-date {
+    background: #d7d8da;
+    border: 1px solid #bfbbbb;
+    color: #000;
+  }
+}

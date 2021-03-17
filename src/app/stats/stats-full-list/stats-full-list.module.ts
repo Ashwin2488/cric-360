@@ -7,7 +7,8 @@ import {StatsFullListComponent} from './stats-full-list.component';
 import {StatsFullListRoutingModule} from './stats-full-list-routing.module';
 import {PlayerDetailComponent} from '../player-detail/player-detail.component';
 import {SuperTabsModule} from '@ionic-super-tabs/angular';
-import {ChartsModule} from "../../charts/charts.module";
+import {ChartsModule} from '../../charts/charts.module';
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import {ChartsModule} from "../../charts/charts.module";
     StatCardContentComponentModule,
     StatsFullListRoutingModule,
     SuperTabsModule,
-    ChartsModule
+    ChartsModule,
+    SharedModule
   ],
   declarations: [StatsFullListComponent, PlayerDetailComponent]
 })
