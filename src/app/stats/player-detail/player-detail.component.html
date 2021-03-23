@@ -23,6 +23,9 @@
           <super-tab-button>
             <ion-label>Bowling</ion-label>
           </super-tab-button>
+          <super-tab-button>
+            <ion-label>Insights</ion-label>
+          </super-tab-button>
         </super-tabs-toolbar>
         <super-tabs-container>
           <super-tab>
@@ -117,6 +120,42 @@
                   </ion-col>
                 </ion-row>
               </ion-grid>
+            </ion-content>
+          </super-tab>
+          <super-tab>
+            <ion-content class="insights">
+              <div class="p-1">
+                <ion-card *ngIf="latestScoresChartData.length > 0">
+                  <div class="ion-text-center">
+                    <ion-chip class="mt-2">
+                      <ion-label>Recent Scores and Strike Rate</ion-label>
+                    </ion-chip>
+                    <div class="p-2">
+                      <app-bar-chart [chartType]="'batting'" [chartData]="latestScoresChartData"></app-bar-chart>
+                    </div>
+                  </div>
+                </ion-card>
+                <ion-card *ngIf="latestWicketsChartData.length > 0">
+                  <div class="ion-text-center">
+                    <ion-chip class="mt-2">
+                      <ion-label>Recent Wickets and Economy</ion-label>
+                    </ion-chip>
+                    <div class="p-2">
+                      <app-bar-chart [chartType]="'bowling'" [chartData]="latestWicketsChartData"></app-bar-chart>
+                    </div>
+                  </div>
+                </ion-card>
+                <ion-card *ngIf="dismissalChartData.length > 0">
+                  <div class="ion-text-center">
+                    <ion-chip class="mt-2">
+                      <ion-label>How Out</ion-label>
+                    </ion-chip>
+                    <div class="p-2">
+                      <app-pie-chart [chartCategory]="'batting-dismissals'" [chartData]="dismissalChartData"></app-pie-chart>
+                    </div>
+                  </div>
+                </ion-card>
+              </div>
             </ion-content>
           </super-tab>
         </super-tabs-container>
