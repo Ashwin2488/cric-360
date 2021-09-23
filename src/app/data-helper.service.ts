@@ -62,7 +62,7 @@ export class DataHelperService {
         venue: match.data.Venue,
         batOrChase: match.data.BatorChase,
         result: this.getMatchResult(match.data.Result, match.data.BatorChase, matchSummary),
-        mom: this.playerDetailMap[match.data.MOM].Name,
+        mom: this.playerDetailMap[match.data.MOM]?.Name,
         teamScore: matchSummary.teamScore,
         opponentScore: matchSummary.opponentScore
       });
@@ -105,7 +105,7 @@ export class DataHelperService {
     const teamWickets = matchSummary.teamScore.runs.split('-')[1];
     const opponentWickets = matchSummary.opponentScore.runs.split('-')[1];
     if (resultCode === '1') {
-      summary = 'Magnets won by ';
+      summary = 'Hawkeye won by ';
       if (batOrChase === '1') {
         summary = `${summary}${teamScore - opponentScore} runs.`;
       } else {

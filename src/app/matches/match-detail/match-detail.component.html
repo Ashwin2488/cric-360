@@ -15,10 +15,10 @@
     <div class="summary-container">
       <ng-container *ngIf="matchSummary['batOrChase'] === '0'">
         <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Opponent',runs: matchSummary['opponentScore'].runs, overs: matchSummary['opponentScore']['overs'][0], teamImage: 'assets/images/club.PNG'}"></ng-container>
-        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Magnets',runs: matchSummary['teamScore'].runs, overs: matchSummary['teamScore']['overs'][0], teamImage: 'assets/images/team.jpg'}"></ng-container>
+        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Hawkeye',runs: matchSummary['teamScore'].runs, overs: matchSummary['teamScore']['overs'][0], teamImage: 'assets/images/team.jpg'}"></ng-container>
       </ng-container>
       <ng-container *ngIf="matchSummary['batOrChase'] === '1'">
-        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Magnets',runs: matchSummary['teamScore'].runs, overs: matchSummary['teamScore']['overs'][0], teamImage: 'assets/images/team.jpg'}"></ng-container>
+        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Hawkeye',runs: matchSummary['teamScore'].runs, overs: matchSummary['teamScore']['overs'][0], teamImage: 'assets/images/team.jpg'}"></ng-container>
         <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Opponent',runs: matchSummary['opponentScore'].runs, overs: matchSummary['opponentScore']['overs'][0], teamImage: 'assets/images/club.PNG'}"></ng-container>
       </ng-container>
       <ion-row>

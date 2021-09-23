@@ -5,7 +5,7 @@
         <ion-img src="assets/images/team.jpg"></ion-img>
       </ion-avatar>
       <ion-title>
-        Magnets CC
+        Hawkeye CC
       </ion-title>
     </div>
   </ion-toolbar>
@@ -17,10 +17,10 @@
       <ion-ripple-effect type="unbounded"></ion-ripple-effect>
       <ng-container *ngIf="matchData['batOrChase'] === '0'">
         <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Opponent',runs: matchData['opponentScore'].runs, overs: matchData['opponentScore']['overs'][0], teamImage: 'assets/images/club.PNG'}"></ng-container>
-        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Magnets',runs: matchData['teamScore'].runs, overs: matchData['teamScore']['overs'][0], teamImage: 'assets/images/team.jpg'}"></ng-container>
+        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Hawkeye',runs: matchData['teamScore'].runs, overs: matchData['teamScore']['overs'][0], teamImage: 'assets/images/team.jpg'}"></ng-container>
       </ng-container>
       <ng-container *ngIf="matchData['batOrChase'] === '1'">
-        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Magnets',runs: matchData['teamScore'].runs, overs: matchData['teamScore']['overs'][0], teamImage: 'assets/images/team.jpg'}"></ng-container>
+        <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Hawkeye',runs: matchData['teamScore'].runs, overs: matchData['teamScore']['overs'][0], teamImage: 'assets/images/team.jpg'}"></ng-container>
         <ng-container *ngTemplateOutlet="scoreTemplate;context:{teamName: 'Opponent',runs: matchData['opponentScore'].runs, overs: matchData['opponentScore']['overs'][0], teamImage: 'assets/images/club.PNG'}"></ng-container>
       </ng-container>
       <ion-row>
