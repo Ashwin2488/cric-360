@@ -10,8 +10,16 @@
           <img [src]="playerData[0].data.icon">
         </ion-avatar>
         <ion-label class="ion-text-left pl-2">
-          <h1 class="font-bold">{{playerData[0]['data']['AllmatchData'][displayProperty]}}</h1>
-          <h3 class="font-bold player-name-label">{{playerData[0]['data']['Name']}}</h3>
+          <h1 class="font-bold">
+            {{playerData[0]['data']['AllmatchData'][displayProperty]}}
+          </h1>
+          <h3 class="font-bold player-name-label">
+            {{playerData[0]['data']['Name']}}
+            <standing-change-indicator [lastWeekStats]="lastWeekStats" [currentStanding]="1"
+              [displayProperty]="displayProperty" [playerID]="playerData[0].data.PlayerID">
+
+            </standing-change-indicator>
+          </h3>
         </ion-label>
       </ng-container>
     </div>
@@ -25,8 +33,17 @@
             </ion-avatar>
           </div>
           <ion-label class="d-flex ion-align-items-center">
-            <h3 class="player-name-label ion-text-left">{{player['data']['Name']}}</h3>
-            <h5 class="ion-text-right">{{player['data']['AllmatchData'][displayProperty]}}</h5>
+            <h3 class="player-name-label ion-text-left">
+              {{player['data']['Name']}}
+
+              <standing-change-indicator [lastWeekStats]="lastWeekStats" [currentStanding]="(i + 1)"
+                [displayProperty]="displayProperty" [playerID]="player.data.PlayerID">
+
+              </standing-change-indicator>
+            </h3>
+            <h5 class="ion-text-right">
+              {{player['data']['AllmatchData'][displayProperty]}}
+            </h5>
           </ion-label>
         </div>
       </ng-container>

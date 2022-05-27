@@ -4,6 +4,7 @@ import {DataHelperService} from '../../data-helper.service';
 import {ModalController} from '@ionic/angular';
 import {PlayerDetailComponent} from '../player-detail/player-detail.component';
 import {RacingChartComponent} from '../../charts/racing-chart/racing-chart.component';
+import { AppEventsService } from 'src/app/app-event-service';
 
 @Component({
   selector: 'app-stats-full-list',
@@ -13,14 +14,23 @@ import {RacingChartComponent} from '../../charts/racing-chart/racing-chart.compo
 export class StatsFullListComponent implements OnInit {
   activeTab = 0;
   tabsList = [];
+  lastWeekStats;
   constructor(private activatedRoute: ActivatedRoute,
               public dataHelperService: DataHelperService,
-              private modalController: ModalController) { }
+              private modalController: ModalController,
+              private appEventService: AppEventsService
+              ) { }
 
   ngOnInit() {
     const context: any = this.activatedRoute.snapshot.paramMap.get('context');
     this.activeTab = context || 0;
     this.initTabs();
+    this.subscribeRatingChange();
+  }
+  subscribeRatingChange() {
+    this.appEventService.lastWeekStats$.subscribe(stats => {
+      this.lastWeekStats = stats;
+    });
   }
   initTabs() {
     this.tabsList = [

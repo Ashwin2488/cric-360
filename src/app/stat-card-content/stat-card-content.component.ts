@@ -10,6 +10,8 @@ export class StatCardContentComponent implements OnInit {
   @Input() title;
   @Input() displayProperty;
   @Input() defaultImage;
+  @Input() lastWeekStats = null;
+  
   constructor() { }
 
   ngOnInit() {}

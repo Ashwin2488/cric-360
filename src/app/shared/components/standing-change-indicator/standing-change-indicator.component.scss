@@ -1,0 +1,19 @@
+.positive {
+   color: #75f785;
+}
+.negative {
+    color: #f73c3c
+}
+.positive, .negative {
+    font-weight: 600;
+    padding-left: 5px;
+}
+ion-icon {
+    position: relative;
+    top: 2px;
+}
+@media (prefers-color-scheme: light) {
+    .positive {
+        color: #10b515;
+    }
+  }

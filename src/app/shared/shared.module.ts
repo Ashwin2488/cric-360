@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatchSummaryCardComponent } from './components/match-summary-card/match-summary-card.component';
 import {BackButtonComponent} from './components/back-button/back-button.component';
-
+import { StandingChangeIndicatorComponent } from './components/standing-change-indicator/standing-change-indicator.component';
 
 @NgModule({
   imports: [
@@ -12,10 +12,11 @@ import {BackButtonComponent} from './components/back-button/back-button.componen
     CommonModule,
     FormsModule
   ],
-  declarations: [MatchSummaryCardComponent, BackButtonComponent],
+  declarations: [MatchSummaryCardComponent, BackButtonComponent, StandingChangeIndicatorComponent],
   exports: [
     MatchSummaryCardComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    StandingChangeIndicatorComponent
   ]
 })
 export class SharedModule {}

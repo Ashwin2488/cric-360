@@ -8,7 +8,7 @@
   padding-top: 5px !important;
   padding-bottom: 5px !important;
   color: var(--ion-card-color);
-  border-bottom: 1px solid #cecdcd;
+  border-bottom: 1px solid rgba(195,193,193,.1803921568627451);
   &.scorecard-header {
     border: 0;
   }
@@ -62,5 +62,8 @@ ion-card {
 @media (prefers-color-scheme: light) {
   .scorecard-container super-tab ion-content::part(background) {
     background: #fff;
+  }
+  .scorecard-container ion-row {
+    border-bottom: 1px solid #cecdcd;
   }
 }

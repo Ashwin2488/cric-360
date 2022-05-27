@@ -1,0 +1,9 @@
+<span
+  *ngIf="lastWeekStats && lastWeekStats[displayProperty] 
+              && lastWeekStats[displayProperty]['previousWeek'][playerID] && (currentStanding - lastWeekStats[displayProperty]['previousWeek'][playerID] !== 0)"
+  [class.positive]="currentStanding < lastWeekStats[displayProperty]['previousWeek'][playerID]"
+  [class.negative]="currentStanding > lastWeekStats[displayProperty]['previousWeek'][playerID]">
+  <ion-icon *ngIf="currentStanding < lastWeekStats[displayProperty]['previousWeek'][playerID]" name="arrow-up"></ion-icon>
+  <ion-icon *ngIf="currentStanding > lastWeekStats[displayProperty]['previousWeek'][playerID]" name="arrow-down"></ion-icon>
+  <span>{{Math.abs(currentStanding - lastWeekStats[displayProperty]['previousWeek'][playerID])}}</span>
+</span>

@@ -2,8 +2,9 @@ import {Injectable} from '@angular/core';
 import {DataService} from './data.service';
 import firebase from 'firebase/app';
 import 'firebase/storage';
+import { AppEventsService } from './app-event-service';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataHelperService {
   appData;
@@ -16,14 +17,11 @@ export class DataHelperService {
   bestEconomyList = [];
   allMatchesData = [];
   sortedMatchIdList = [];
-  scoreCardDataMap = {
-  };
-  playerDetailMap = {
-  };
+  scoreCardDataMap = {};
+  playerDetailMap = {};
   allScoreCard = [];
   strikeRateList = [];
-  constructor(private dataService: DataService) {
-  }
+  constructor(private dataService: DataService, private appEventService: AppEventsService) {}
   setAppData(response) {
     this.appData = response;
     this.allScoreCard = response.scorecardData.matches;
@@ -32,14 +30,22 @@ export class DataHelperService {
     this.parsePlayerData(playerData);
     this.parseMatchesData(response.matchData.matches);
     this.parseScoreCardData(response.scorecardData.matches);
+    this.generateStats();
   }
   addMissingData(players) {
     players.forEach((player) => {
       this.addPlayerImage(player);
       this.addHighScore(player);
-      if (player.data.AllmatchData && player.data.AllmatchData.OversBowled > 0 && player.data.AllmatchData.Matches > 1) {
-        player.data.AllmatchData.economy = player.data.AllmatchData.RunsConceeded / player.data.AllmatchData.OversBowled;
-        player.data.AllmatchData.economy = player.data.AllmatchData.economy.toFixed(2);
+      if (
+        player.data.AllmatchData &&
+        player.data.AllmatchData.OversBowled > 0 &&
+        player.data.AllmatchData.Matches > 1
+      ) {
+        player.data.AllmatchData.economy =
+          player.data.AllmatchData.RunsConceeded /
+          player.data.AllmatchData.OversBowled;
+        player.data.AllmatchData.economy =
+          player.data.AllmatchData.economy.toFixed(2);
       }
     });
     return players;
@@ -48,7 +54,10 @@ export class DataHelperService {
     let highScore = 0;
     this.allScoreCard.forEach((scoreCard) => {
       if (scoreCard.data.PlayerID === player.data.PlayerID) {
-        highScore = Number(scoreCard.data.Runs) > highScore ? scoreCard.data.Runs : highScore;
+        highScore =
+          Number(scoreCard.data.Runs) > highScore
+            ? scoreCard.data.Runs
+            : highScore;
       }
     });
     player.data.AllmatchData = player.data.AllmatchData || {};
@@ -58,11 +67,15 @@ export class DataHelperService {
     const storage = firebase.storage();
     const storageRef = storage.ref();
 
-    storageRef.child(`player-dp/${player.data.PlayerID}/player.jpg`).getDownloadURL().then((url) => {
-      player.data.icon = url;
-    }).catch(() => {
-      player.data.icon = 'assets/images/bowler.png';
-    });
+    storageRef
+      .child(`player-dp/${player.data.PlayerID}/player.jpg`)
+      .getDownloadURL()
+      .then((url) => {
+        player.data.icon = url;
+      })
+      .catch(() => {
+        player.data.icon = 'assets/images/bowler.png';
+      });
   }
   addPlayerDetailMap(players) {
     players.forEach((player) => {
@@ -72,55 +85,84 @@ export class DataHelperService {
   parsePlayerData(players) {
     this.mostRunsList = players.slice(0).sort(this.matchDataSort('Runs'));
     this.highScoreList = players.slice(0).sort(this.matchDataSort('HighScore'));
-    this.battingAverageList = players.slice(0).sort(this.matchDataSort('AvgRuns'));
-    this.highestWicketList = players.slice(0).sort(this.matchDataSort('Wickets'));
+    this.battingAverageList = players
+      .slice(0)
+      .sort(this.matchDataSort('AvgRuns'));
+    this.highestWicketList = players
+      .slice(0)
+      .sort(this.matchDataSort('Wickets'));
     this.bestEconomyList = this.getBestEconomyList(players);
     this.highestFoursList = players.slice(0).sort(this.matchDataSort('Fours'));
     this.highestSixList = players.slice(0).sort(this.matchDataSort('Sixes'));
-    this.strikeRateList = players.slice(0).sort(this.matchDataSort('StrikeRate'));
+    this.strikeRateList = players
+      .slice(0)
+      .sort(this.matchDataSort('StrikeRate'));
   }
   parseMatchesData(matches) {
     matches = matches.sort(this.matchDateSort);
     matches.forEach((match) => {
       const isTournament = match.data.IsTournament === '1' ? true : false;
-      const matchSummary = this.parseMatchSummary(match.data.Summary, isTournament);
+      const matchSummary = this.parseMatchSummary(
+        match.data.Summary,
+        isTournament
+      );
       this.allMatchesData.push({
         matchId: match.data.MatchID,
         venue: match.data.Venue,
         batOrChase: match.data.BatorChase,
-        result: this.getMatchResult(match.data.Result, match.data.BatorChase, matchSummary),
-        mom: this.playerDetailMap[match.data.MOM] ? this.playerDetailMap[match.data.MOM].Name : null,
+        result: this.getMatchResult(
+          match.data.Result,
+          match.data.BatorChase,
+          matchSummary
+        ),
+        mom: this.playerDetailMap[match.data.MOM]
+          ? this.playerDetailMap[match.data.MOM].Name
+          : null,
         teamScore: matchSummary.teamScore,
         opponentScore: matchSummary.opponentScore,
         opponentName: matchSummary.opponentName,
         matchType: matchSummary.matchType,
         isTournament,
-        matchDate: this.getMatchDate(match.data.Date)
+        matchDate: this.getMatchDate(match.data.Date),
       });
       this.sortedMatchIdList.push(match.data.MatchID);
     });
   }
   parseScoreCardData(matches) {
     matches.forEach((match) => {
-      this.scoreCardDataMap[match.data.MatchID] = this.scoreCardDataMap[match.data.MatchID] || [];
+      this.scoreCardDataMap[match.data.MatchID] =
+        this.scoreCardDataMap[match.data.MatchID] || [];
       match.data.playerName = this.playerDetailMap[match.data.PlayerID].Name;
-      match.data.strikeRate = ((match.data.Runs / match.data.Balls) * 100).toFixed(2);
-      match.data.economy = (match.data.RunsConceeded / match.data.OversBowled).toFixed(2);
+      match.data.strikeRate = (
+        (match.data.Runs / match.data.Balls) *
+        100
+      ).toFixed(2);
+      match.data.economy = (
+        match.data.RunsConceeded / match.data.OversBowled
+      ).toFixed(2);
       this.scoreCardDataMap[match.data.MatchID].push(match.data);
     });
   }
   parseMatchSummary(summaryString, isTournament) {
     const tmpString = summaryString.split('&');
-    let teamStr = tmpString[0].indexOf('We') !== -1 ? tmpString[0] : tmpString[1];
+    let teamStr =
+      tmpString[0].indexOf('We') !== -1 ? tmpString[0] : tmpString[1];
     teamStr = teamStr.replace('We', '').trim();
-    let opponentStr = tmpString[0].indexOf('Opponent') !== -1 ? tmpString[0] : tmpString[1];
+    let opponentStr =
+      tmpString[0].indexOf('Opponent') !== -1 ? tmpString[0] : tmpString[1];
     const opponentName = tmpString[2] ? tmpString[2].split('=')[1] : 'Opponent';
-    const matchType = isTournament ? tmpString[3] ? tmpString[3].split('=')[1] : 'Tournament' : 'Practice match';
+    const matchType = isTournament
+      ? tmpString[3]
+        ? tmpString[3].split('=')[1]
+        : 'Tournament'
+      : 'Practice match';
     opponentStr = opponentStr.replace('Opponent', '').replace('-', '').trim();
     const teamScoreStr = teamStr.substr(0, teamStr.indexOf('('));
     const teamOversStr = teamStr.replace(teamScoreStr, '').slice(1, -1);
     const opponentScoreStr = opponentStr.substr(0, opponentStr.indexOf('('));
-    const opponentOversStr = opponentStr.replace(opponentScoreStr, '').slice(1, -1);
+    const opponentOversStr = opponentStr
+      .replace(opponentScoreStr, '')
+      .slice(1, -1);
     return {
       teamScore: {
         runs: teamScoreStr.split('/').join('-'),
@@ -128,13 +170,13 @@ export class DataHelperService {
       },
       opponentScore: {
         runs: opponentScoreStr.split('/').join('-'),
-        overs: opponentOversStr.split('/')
+        overs: opponentOversStr.split('/'),
       },
       opponentName,
-      matchType
+      matchType,
     };
   }
-  getMatchResult(resultCode, batOrChase , matchSummary) {
+  getMatchResult(resultCode, batOrChase, matchSummary) {
     let summary = '';
     const teamScore = matchSummary.teamScore.runs.split('-')[0];
     const opponentScore = matchSummary.opponentScore.runs.split('-')[0];
@@ -160,7 +202,10 @@ export class DataHelperService {
   getBestEconomyList(players) {
     const validEconomyPlayers = [];
     const otherPlayers = [];
-    const playersList = players.slice(0).sort(this.matchDataSort('economy')).reverse();
+    const playersList = players
+      .slice(0)
+      .sort(this.matchDataSort('economy'))
+      .reverse();
     playersList.forEach((player) => {
       if (player.data.AllmatchData && player.data.AllmatchData.economy) {
         validEconomyPlayers.push(player);
@@ -179,14 +224,19 @@ export class DataHelperService {
         matchIndex = matchIndex + 1;
         chartData[matchIndex] = [];
         this.scoreCardDataMap[matchId].forEach((player) => {
-          playerScoreMap[player.playerName] = playerScoreMap[player.playerName] || {};
-          playerScoreMap[player.playerName].runs = playerScoreMap[player.playerName].runs ? playerScoreMap[player.playerName].runs : 0;
+          playerScoreMap[player.playerName] =
+            playerScoreMap[player.playerName] || {};
+          playerScoreMap[player.playerName].runs = playerScoreMap[
+            player.playerName
+          ].runs
+            ? playerScoreMap[player.playerName].runs
+            : 0;
           playerScoreMap[player.playerName].runs += Number(player.Runs);
           matchPlayerMap[matchId] = matchPlayerMap[matchId] || {};
           matchPlayerMap[matchId][player.playerName] = true;
           const playerScoreObj = {
             player: player.playerName,
-            runs: playerScoreMap[player.playerName].runs
+            runs: playerScoreMap[player.playerName].runs,
           };
           chartData[matchIndex].push(playerScoreObj);
         });
@@ -195,10 +245,12 @@ export class DataHelperService {
           const playerName = this.playerDetailMap[playerId].Name;
           if (!matchPlayerMap[matchId][playerName]) {
             playerScoreMap[playerName] = playerScoreMap[playerName] || {};
-            playerScoreMap[playerName].runs = playerScoreMap[playerName].runs ? playerScoreMap[playerName].runs : 0;
+            playerScoreMap[playerName].runs = playerScoreMap[playerName].runs
+              ? playerScoreMap[playerName].runs
+              : 0;
             chartData[matchIndex].push({
               player: playerName,
-              runs: playerScoreMap[playerName].runs
+              runs: playerScoreMap[playerName].runs,
             });
           }
         });
@@ -210,7 +262,9 @@ export class DataHelperService {
   }
   sortChartData(chartData) {
     Object.keys(chartData).forEach((matchIndex) => {
-      chartData[matchIndex] = chartData[matchIndex].sort((a, b) => a.player.localeCompare(b.player));
+      chartData[matchIndex] = chartData[matchIndex].sort((a, b) =>
+        a.player.localeCompare(b.player)
+      );
     });
     return chartData;
   }
@@ -218,7 +272,7 @@ export class DataHelperService {
     return (a, b) => {
       if (!a.data.AllmatchData) {
         a.data.AllmatchData = {
-          [property]: 0
+          [property]: 0,
         };
       }
       if (a.data.AllmatchData && !a.data.AllmatchData[property]) {
@@ -226,7 +280,7 @@ export class DataHelperService {
       }
       if (!b.data.AllmatchData) {
         b.data.AllmatchData = {
-          [property]: 0
+          [property]: 0,
         };
       }
       if (b.data.AllmatchData && !b.data.AllmatchData[property]) {
@@ -245,6 +299,23 @@ export class DataHelperService {
       formattedDate = '';
     }
     return formattedDate;
+  }
+  generateStats() {
+    if (typeof Worker !== 'undefined') {
+      const worker = new Worker('./rating-stats.worker', { type: 'module' });
+      worker.onmessage = ({ data }) => {
+        console.log('LAST WEEK STANDINGS GENERATED!!', data);
+        this.appEventService.setLastweekStats(data);
+      };
+      worker.postMessage({
+        mostRunsList: this.mostRunsList,
+        mostWicketsList: this.highestWicketList,
+        allMatchesData: this.allMatchesData,
+        allScoreCard: this.allScoreCard,
+      });
+    } else {
+      console.warn('No Web worker support!!');
+    }
   }
   matchDateSort(a, b) {
     const tempADate = a.data.Date.split('/');

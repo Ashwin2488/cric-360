@@ -29,7 +29,13 @@
                       <ion-avatar>
                         <img [src]="player.data.icon">
                       </ion-avatar>
-                      <h2 class="pl-1 ion-text-left">{{player['data']['Name']}}</h2>
+                      <h2 class="pl-1 ion-text-left">
+                        {{player['data']['Name']}}
+                        <standing-change-indicator [lastWeekStats]="lastWeekStats" [currentStanding]="(i + 1)"
+                          [displayProperty]="tab['displayValueKey']" [playerID]="player.data.PlayerID">
+                        
+                        </standing-change-indicator>
+                      </h2>
                     </div>
                   </ion-col>
                   <ion-col size="4">
