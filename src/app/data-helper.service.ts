@@ -130,6 +130,9 @@ export class DataHelperService {
   }
   parseScoreCardData(matches) {
     matches.forEach((match) => {
+      if(!this.playerDetailMap[match.data.PlayerID]) {
+        return;
+      }
       this.scoreCardDataMap[match.data.MatchID] =
         this.scoreCardDataMap[match.data.MatchID] || [];
       match.data.playerName = this.playerDetailMap[match.data.PlayerID].Name;
